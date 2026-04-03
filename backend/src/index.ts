@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { djRoutes } from "./routes/dj.routes";
 import { errorHandler } from "./middleware/error.middleware";
+import { connectRedis } from "./lib/redis";
 
 dotenv.config();
 
@@ -20,6 +21,11 @@ app.use("/api/dj", djRoutes);
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`My code: Server is running on port ${PORT}`);
-});
+const start = async () => {
+  await connectRedis();
+  app.listen(PORT, () => {
+    console.log(`My code: Server is running on port ${PORT}`);
+  });
+};
+
+start();
