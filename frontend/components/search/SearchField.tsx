@@ -1,36 +1,51 @@
 "use client";
 
 import { RefObject, useState } from "react";
-import { Search, X } from "lucide-react";
 
 interface SearchFieldProps {
   inputRef?: RefObject<HTMLInputElement | null>;
   value: string;
   onChange: (v: string) => void;
-  onSubmit: (e?: React.FormEvent) => void;
+  onSubmit: () => void;
   loading?: boolean;
   large?: boolean;
 }
 
-export default function SearchField({ inputRef, value, onChange, onSubmit, loading, large }: SearchFieldProps) {
+export default function SearchField({
+  inputRef,
+  value,
+  onChange,
+  onSubmit,
+  loading,
+  large,
+}: SearchFieldProps) {
   const [focused, setFocused] = useState(false);
 
   return (
-    <form onSubmit={(e) => { e.preventDefault(); onSubmit(e); }} className="w-full">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit();
+      }}
+      className="w-full"
+    >
       <div
-        className="flex items-center gap-[14px] bg-[var(--s1)] transition-[border-color,box-shadow] duration-200"
+        className="flex items-center gap-3.5 bg-panel transition-[border-color,box-shadow] duration-200"
         style={{
-          border: `1px solid ${focused ? "var(--bd2)" : "var(--bd)"}`,
+          border: `1px solid ${focused ? "#34343a" : "#232326"}`,
           boxShadow: focused ? "0 0 0 4px rgba(241,239,234,0.04)" : "none",
           borderRadius: large ? 16 : 12,
           padding: large ? "17px 18px" : "12px 14px",
         }}
       >
-        <Search
-          size={large ? 18 : 15}
-          className="shrink-0 transition-colors duration-200"
-          style={{ color: focused || value ? "var(--text)" : "var(--mid)" }}
-        />
+        {/* Search icon */}
+        <span className="shrink-0" style={{ color: focused || value ? "#f1efea" : "#8b8b91" }}>
+          <svg width={large ? 18 : 15} height={large ? 18 : 15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+        </span>
+
         <input
           ref={inputRef}
           type="text"
@@ -39,35 +54,41 @@ export default function SearchField({ inputRef, value, onChange, onSubmit, loadi
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           placeholder={large ? "Search artists, DJs, genres…" : "Search again…"}
-          className="flex-1 bg-transparent border-none outline-none text-[var(--text)] font-body tracking-[-0.01em]"
-          style={{ fontSize: large ? 18 : 15 }}
+          className="flex-1 bg-transparent border-none outline-none font-ui text-fg placeholder:text-muted"
+          style={{ fontSize: large ? 18 : 15, letterSpacing: "-0.01em" }}
         />
 
         {value && !loading && (
           <button
             type="button"
             onClick={() => onChange("")}
-            className="flex p-1 rounded-[6px] text-[var(--mid)] hover:text-[var(--text)] transition-colors duration-150 cursor-pointer border-none bg-transparent"
+            className="shrink-0 text-muted hover:text-fg transition-colors duration-150 cursor-pointer border-none bg-transparent p-0.5"
           >
-            <X size={14} />
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
           </button>
         )}
 
         {loading ? (
           <div
-            className="w-[15px] h-[15px] rounded-full shrink-0"
-            style={{ border: "2px solid var(--bd2)", borderTopColor: "var(--text)", animation: "djSpin 0.8s linear infinite" }}
+            className="w-4 h-4 rounded-full shrink-0"
+            style={{
+              border: "2px solid #34343a",
+              borderTopColor: "#f1efea",
+              animation: "spin 0.8s linear infinite",
+            }}
           />
         ) : value ? (
           <button
             type="submit"
-            className="shrink-0 bg-[var(--text)] text-[var(--bg)] font-body text-[13px] font-semibold rounded-[9px] transition-opacity duration-150 hover:opacity-85 cursor-pointer border-none"
+            className="shrink-0 bg-fg text-ink font-ui text-[13px] font-semibold rounded-[9px] hover:opacity-85 transition-opacity cursor-pointer border-none"
             style={{ padding: large ? "9px 16px" : "7px 13px" }}
           >
             Search
           </button>
         ) : (
-          <span className="inline-flex items-center gap-1 shrink-0 font-body text-[11px] font-semibold text-[var(--mid)] bg-[var(--s2)] border border-[var(--bd)] rounded-[7px] px-2 py-1">
+          <span className="inline-flex items-center gap-1 shrink-0 font-ui text-[11px] font-semibold text-muted bg-panel2 border border-line rounded-[7px] px-2 py-1">
             ⌘ K
           </span>
         )}

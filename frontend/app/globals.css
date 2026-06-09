@@ -1,44 +1,39 @@
 @import "tailwindcss";
 
-/* ── Design tokens ─────────────────────────────────────── */
-:root {
-  --bg:   #141417;
-  --s1:   #1b1b20;
-  --s2:   #232329;
-  --bd:   #2a2a31;
-  --bd2:  #3b3b45;
-  --text: #f1efea;
-  --mid:  #9a99a2;
-  --dim:  #5b5a63;
+@theme {
+  --color-ink:        #0a0a0a;
+  --color-panel:      #141416;
+  --color-panel2:     #1d1d20;
+  --color-panel3:     #262629;
+  --color-line:       #232326;
+  --color-line2:      #34343a;
+  --color-fg:         #f1efea;
+  --color-muted:      #8b8b91;
+  --color-faint:      #57565c;
+  --color-verified:   #4ade80;
+  --color-spotify:    #1ed760;
+  --color-soundcloud: #ff5500;
+  --color-youtube:    #ff4444;
+
 }
 
-/* Tailwind-accessible color + font tokens */
-@theme {
-  --color-bg:     #141417;
-  --color-s1:     #1b1b20;
-  --color-s2:     #232329;
-  --color-bd:     #2a2a31;
-  --color-bd2:    #3b3b45;
-  --color-tx:     #f1efea;
-  --color-mid:    #9a99a2;
-  --color-dim:    #5b5a63;
-  --color-accent: #4ade80;
-
-  --font-display: var(--font-serif), sans-serif;
-  --font-body:    var(--font-mono), Helvetica, sans-serif;
+/* ── Font utilities ────────────────────────────────────── */
+@layer utilities {
+  .font-display { font-family: var(--font-bricolage), sans-serif; }
+  .font-ui      { font-family: var(--font-schibsted), sans-serif; }
 }
 
 /* ── Base ──────────────────────────────────────────────── */
 html, body { height: 100%; }
 
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
+  background: #0a0a0a;
+  color: #f1efea;
+  font-family: var(--font-schibsted), sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Film grain */
+/* Film grain overlay */
 body::after {
   content: '';
   position: fixed;
@@ -50,10 +45,10 @@ body::after {
   background-size: 200px;
 }
 
-::selection { background: rgba(240, 237, 232, 0.1); }
-::-webkit-scrollbar { width: 2px; }
+::selection { background: rgba(241, 239, 234, 0.1); }
+::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #222; }
+::-webkit-scrollbar-thumb { background: #2a2a2e; }
 
 /* ── Animations ────────────────────────────────────────── */
 @keyframes fadeUp {
@@ -68,10 +63,6 @@ body::after {
   from { background-position: -300% center; }
   to   { background-position:  300% center; }
 }
-@keyframes djSpin {
+@keyframes spin {
   to { transform: rotate(360deg); }
-}
-@keyframes waveAnim {
-  0%, 100% { transform: scaleY(0.4); }
-  50%       { transform: scaleY(1); }
 }
