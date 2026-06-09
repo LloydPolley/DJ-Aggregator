@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-serif",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const schibsted = Schibsted_Grotesk({
+  variable: "--font-mono",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
   title: "Find any DJ",
-  description: "Discover DJs and their music across Spotify and YouTube",
+  description: "Discover DJs and their music across Spotify, YouTube & SoundCloud",
 };
 
 export default function RootLayout({
@@ -23,13 +25,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
-
-      <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+    <html lang="en" className={`${bricolage.variable} ${schibsted.variable} h-full`}>
+      <body className="min-h-full flex flex-col" style={{ fontFamily: "var(--font-mono), Helvetica, sans-serif" }}>
+        {children}
+      </body>
     </html>
   );
 }

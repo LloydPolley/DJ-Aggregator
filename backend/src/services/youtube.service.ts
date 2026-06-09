@@ -22,12 +22,14 @@ export const searchYoutube = async (djName: string) => {
     params: {
       key: process.env.YOUTUBE_API_KEY,
       part: "snippet",
-      channelId,
+      q: djName,
       maxResults: 6,
-      order: "date",
       type: "video",
+      // videoCategoryId: "10",
     },
   });
+
+  console.log("video res", videoRes.data);
 
   return {
     channelName: channel.snippet.channelTitle,

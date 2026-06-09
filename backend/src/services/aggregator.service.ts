@@ -10,11 +10,11 @@ const CACHE_TTL = 60 * 60; // 1 hour
 export const aggregateDJData = async (name: string) => {
   const cacheKey = `dj:${name.toLocaleLowerCase().trim()}`;
 
-  const cached = await redisClient.get(cacheKey);
-  if (cached) {
-    console.log("Cache hit for", cacheKey);
-    return JSON.parse(cached);
-  }
+  // const cached = await redisClient.get(cacheKey);
+  // if (cached) {
+  //   console.log("Cache hit for", cacheKey);
+  //   return JSON.parse(cached);
+  // }
 
   console.log(`Cache miss for: ${name} — fetching from APIs`);
 
@@ -29,7 +29,7 @@ export const aggregateDJData = async (name: string) => {
     youtube: youtube.status === "fulfilled" ? youtube.value : null,
   };
 
-  await redisClient.set(cacheKey, JSON.stringify(result), { EX: CACHE_TTL });
+  // await redisClient.set(cacheKey, JSON.stringify(result), { EX: CACHE_TTL });
 
   return result;
 };
